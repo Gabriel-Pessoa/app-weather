@@ -1,0 +1,9 @@
+<div class="container-fluid">
+    <h1>As 10 melhores cidades</h1>
+    
+    <jv-city-detail *ngFor="let dataCity of dataCities"
+                    [position]="dataCity.pos"
+                    [cityId]="dataCity.id"
+                    [src]="dataCity.src"></jv-city-detail>
+   
+</div>
