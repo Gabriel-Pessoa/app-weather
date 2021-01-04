@@ -8,13 +8,13 @@
     </div>
 
     <div class="city-temp">
-      <h3>Temperatura: {{dataCity.temp | number: '1.0-0'}} ºC</h3>
-      <span>Sensação térmica: {{dataCity.sensation | number: '1.0'}} ºC</span>
+      <h3>Temperatura: {{dataCity.temp | number: '1.0-0'}} {{ unitSymbol }}</h3>
+      <span>Sensação térmica: {{dataCity.sensation | number: '1.0'}} {{ unitSymbol }}</span>
     </div>
 
     <div class="city-misc">
       <div>Humidade: {{dataCity.humidity}} %</div>
-      <div>Velocidade do vento: {{dataCity.windSpeed}} m/s</div>
+      <div>Velocidade do vento: {{dataCity?.windSpeed}} m/s</div>
     </div>
 
   </div>

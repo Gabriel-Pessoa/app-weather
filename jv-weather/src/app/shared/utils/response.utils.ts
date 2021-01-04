@@ -1,3 +1,4 @@
+import { CityTopTen } from './../models/city-top-ten.model';
 import { CityWeather, CityDailyWeather } from '../models/weather.model';
 
 export function responseToCityWeather(response: any): CityWeather {
@@ -72,4 +73,15 @@ export function responseToCityDailyWeather(response: any): CityDailyWeather {
       }
     })),
   }
+}
+
+export function responseToCityTopTen(response: any): CityTopTen {
+  return {
+    cityName: response.city.name,
+    country: response.city.country,
+    temp: response.weather.temp,
+    sensation: response.weather.feelsLike,
+    humidity: response.weather.humidity,
+    windSpeed: response.weather.wind.speed
+  };
 }

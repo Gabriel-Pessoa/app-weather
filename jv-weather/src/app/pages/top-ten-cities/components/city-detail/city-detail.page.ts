@@ -1,40 +1,44 @@
-import { CitiesService } from './../../../../shared/services/cities.service';
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { CityTopTen } from 'src/app/shared/models/city-top-ten.model';
+import { responseToCityTopTen } from 'src/app/shared/utils/response.utils';
+import { WeatherService } from 'src/app/shared/services/weather.service';
+import { Units } from 'src/app/shared/models/units.enum';
+import { unitToSymbol } from 'src/app/shared/utils/units.utils';
 
 @Component({
   selector: 'jv-city-detail',
   templateUrl: './city-detail.page.html',
   styleUrls: ['./city-detail.page.scss'],
-  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CityDetailPage implements OnInit {
 
-  @Input() cityId;
-  @Input() position;
-  @Input() src;
+  @Input() cityId: string;
+  @Input() position: number;
+  @Input() unit: Units;
+  @Input() src: string;
 
-  dataCity = {
+  dataCity: CityTopTen = {
     cityName: '',
     country: '',
     temp: '',
     sensation: '',
     humidity: '',
-    windSpeed: '',
+    windSpeed: ''
   };
-  
-  constructor(private citiesService: CitiesService) { }
+
+
+  constructor(private weatherService: WeatherService) { }
 
   ngOnInit(): void {
-    this.citiesService.getCityById(this.cityId).subscribe(data =>
-      {
-        this.dataCity.cityName = data.cityName;
-        this.dataCity.country = data.country;
-        this.dataCity.temp = data.temp;
-        this.dataCity.sensation = data.sensation;
-        this.dataCity.humidity = data.humidity;
-        this.dataCity.windSpeed = data.windSpeed;
-      }
-    )
+
+    this.weatherService.getCityWeatherById(this.cityId).subscribe(response => {
+      this.dataCity = responseToCityTopTen(response);
+    });
+
   }
+
+  get unitSymbol(): string {
+    return unitToSymbol(this.unit);
+  }
+
 }
